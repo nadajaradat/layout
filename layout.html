@@ -33,15 +33,51 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="participant">
-            <video autoplay></video>
-            <div class="name-label">Participant 1</div>
-        </div>
-        <div class="participant">
-            <video autoplay></video>
-            <div class="name-label">Participant 2</div>
-        </div>
+    <div class="container" id="participants-container">
+        <!-- Participants will be dynamically added here -->
     </div>
+    <script>
+        const participantsContainer = document.getElementById('participants-container');
+
+        // Function to create a participant element
+        function createParticipantElement(participantName, trackId) {
+            const participantDiv = document.createElement('div');
+            participantDiv.className = 'participant';
+
+            const videoElement = document.createElement('video');
+            videoElement.autoplay = true;
+            videoElement.id = trackId;
+
+            const nameLabel = document.createElement('div');
+            nameLabel.className = 'name-label';
+            nameLabel.textContent = participantName;
+
+            participantDiv.appendChild(videoElement);
+            participantDiv.appendChild(nameLabel);
+
+            return participantDiv;
+        }
+
+        // Listen for messages from the LiveKit client
+        window.addEventListener('message', (event) => {
+            const { trackId, isSpeaking, participantName } = event.data;
+
+            // Check if the participant already exists
+            let participantElement = document.getElementById(trackId);
+            if (!participantElement) {
+                // Create a new participant element
+                participantElement = createParticipantElement(participantName, trackId);
+                participantsContainer.appendChild(participantElement);
+            }
+
+            // Update the video stream
+            const videoElement = participantElement.querySelector('video');
+            if (isSpeaking) {
+                videoElement.srcObject = new MediaStream([trackId]); // Add track to video
+            } else {
+                videoElement.srcObject = null;
+            }
+        });
+    </script>
 </body>
 </html>
