@@ -4,14 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recording Layout</title>
-    
+    <style>
+        body { margin: 0; display: flex; justify-content: center; align-items: center; background: #222; }
+        .container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .participant {
+            position: relative;
+            background-color: black;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        .participant video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .name-label {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="participant">
+            <video autoplay></video>
             <div class="name-label">Participant 1</div>
         </div>
         <div class="participant">
+            <video autoplay></video>
             <div class="name-label">Participant 2</div>
         </div>
     </div>
