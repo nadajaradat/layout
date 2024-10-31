@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Layout</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+    }
+    #main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100vh;
+    }
+    #speaker-video {
+      width: 80%;
+      height: 80%;
+      border: 2px solid white;
+    }
+    #participant-info {
+      position: absolute;
+      bottom: 20px;
+      color: white;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="main-container">
+    <video id="speaker-video" autoplay muted></video>
+    <div id="participant-info"></div>
+  </div>
+  <script>
+    // Use LiveKit's track publishing to dynamically update the speaker video and info
+    window.addEventListener('message', (event) => {
+      const { trackId, isSpeaking, participantName } = event.data;
+      const videoElement = document.getElementById('speaker-video');
+      const participantInfo = document.getElementById('participant-info');
+
+      if (isSpeaking) {
+        videoElement.srcObject = new MediaStream([trackId]); // Add track to video
+        participantInfo.textContent = `${participantName} is speaking`;
+      } else {
+        videoElement.srcObject = null;
+        participantInfo.textContent = '';
+      }
+    });
+  </script>
+</body>
+</html>
