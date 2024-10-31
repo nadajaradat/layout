@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LiveKit Recording Layout</title>
+    <style>
+        body { margin: 0; }
+        .container { display: flex; }
+        .participant { flex: 1; position: relative; }
+        .participant video { width: 100%; }
+        .name-label { position: absolute; bottom: 5px; left: 5px; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="participant">
+            <video autoplay></video>
+            <div class="name-label">Participant 1</div>
+        </div>
+        <div class="participant">
+            <video autoplay></video>
+            <div class="name-label">Participant 2</div>
+        </div>
+    </div>
+</body>
+</html>
